@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.sentinel.daemon</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>__PYTHON__</string>
+        <string>-m</string>
+        <string>conductor.daemon</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>__SENTINEL_DIR__</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONPATH</key>
+        <string>__SENTINEL_DIR__</string>
+        <key>PATH</key>
+        <string>__PATH__</string>
+    </dict>
+    <!-- Long-lived: owns channel listeners + the approval expiry sweeper. -->
+    <key>KeepAlive</key>
+    <true/>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>__SENTINEL_HOME__/logs/daemon.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>__SENTINEL_HOME__/logs/daemon.err.log</string>
+</dict>
+</plist>

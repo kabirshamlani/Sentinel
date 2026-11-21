@@ -1,0 +1,17 @@
+agent: synthesizer
+version: 1
+unit: [.claude/agents/synthesizer.md, conductor/orchestrator.py]
+role: Merges multi-specialist outputs - lives on the dead pipeline path.
+definition_of_good: |
+  Either reachable (the pipeline path revived, its syntheses persisted) or
+  explicitly retired. Today its work would not be recorded even if it ran -
+  observability is part of the definition of good.
+expect_episodes: false
+episode_checks: []
+wiring_checks:
+  - check: has_call_site
+    params:
+      slug: synthesizer
+      exclude: [orchestrator.py, agent_registry.py]
+min_occurrences: 1
+non_goals: Static wiring review only until it actually runs.

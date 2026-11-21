@@ -1,0 +1,21 @@
+agent: market_brief
+aliases: [briefing]
+version: 1
+unit:
+  - verticals/market_brief.py
+role: 6:05 AM market/agent-landscape briefing with a novelty filter and TI-post judge.
+definition_of_good: |
+  A morning brief of genuinely NEW items (novelty-filtered against what was
+  already shown), each with a source link. The TI-post judge's full score
+  distribution is recorded per run - a judge whose scores are discarded cannot
+  be calibrated. Skip-if-nothing: a no-news morning produces no brief.
+expect_episodes: true
+episode_checks:
+  - check: no_placeholder_sources
+    severity: high
+  - check: success_label_consistent
+    severity: medium
+min_occurrences: 2
+non_goals: |
+  Not judged on market opinion quality - judged on novelty, sourcing, and
+  observability of its own scoring.

@@ -1,0 +1,44 @@
+agent: comms-drafter
+aliases: [inbox_triage, inbox]
+version: 1
+unit:
+  - .claude/agents/comms-drafter.md
+  - verticals/inbox_triage.py
+  - prompts/inbox/draft_email.md
+  - prompts/inbox/draft_gchat.md
+role: Drafts replies in the owner's voice for email/GChat items that genuinely need a reply.
+definition_of_good: |
+  For an item worth replying to, produce a single ready-to-send draft in
+  the owner's concise voice - no AI-isms, no over-formality, correct recipient
+  context. For an item NOT worth replying to (FYI, social, resolved, not
+  addressed to him), output exactly SKIP rather than forcing a draft. Never
+  propose an empty draft. Never show raw users/<id> identifiers.
+expect_episodes: true
+episode_checks:
+  - check: draft_nonempty_or_skip
+    severity: high
+  - check: no_raw_ids
+    severity: medium
+  - check: no_meta_complaints
+    severity: medium
+  - check: success_label_consistent
+    severity: medium
+  - check: assertion
+    params: {type: not_contains, value: "As an AI"}
+    severity: high
+wiring_checks:
+  - check: agent_md_exists
+    params: {slug: comms-drafter}
+judged_dimensions:
+  - name: voice-match
+    question: Does the draft read like the owner's own concise, direct writing (not assistant-formal, no filler)?
+    anchors:
+      1: Formal AI boilerplate ("I hope this finds you well", hedging filler).
+      3: Serviceable but generic - would need edits before sending.
+      5: Sendable as-is - concise, direct, matches how the owner writes.
+sample_judge_per_cycle: 3
+min_occurrences: 2
+non_goals: |
+  Not responsible for deciding WHICH items get drafted (gating lives in
+  inbox_triage's selection code - over-drafting from ungated rooms/DMs is an
+  architecture defect there, not a prompt defect here).

@@ -1,0 +1,48 @@
+agent: agent-chat
+aliases: [chat, conductor-chat]
+version: 1
+unit:
+  - channels/agent_chat.py
+  - channels/chat_handler.py
+  - prompts/chat/core.md
+  - .claude/skills/sentinel-chat/SKILL.md
+  - .claude/skills/chat-voice/SKILL.md
+role: The Telegram chief-of-staff chat core - reasons, chains tools, proposes mutations.
+definition_of_good: |
+  Every turn ends in a RESULT or an honest blocker - never a promise ("I'll get
+  to it") without the work done. Claims are grounded in tool results. Mutations
+  go to the broker (PROPOSE:), and what the user sees is truthful about whether
+  an action was queued, skipped, or executed. Replies use chat voice: short,
+  answer-first, no walls of text, names instead of raw ids.
+expect_episodes: true
+episode_checks:
+  - check: answer_not_promise
+    severity: high
+  - check: no_raw_ids
+    severity: medium
+  - check: no_doom_loop
+    severity: high
+  - check: no_meta_complaints
+    severity: medium
+  - check: output_max_chars
+    params: {limit: 3500}
+    severity: low
+judged_dimensions:
+  - name: grounded-and-executed
+    question: Did the reply report things that were actually done/read (grounded in tool results), executing the ask rather than narrating intent?
+    anchors:
+      1: Narrates plans or claims actions with no evidence of execution.
+      3: Partially executed; some claims not backed by visible results.
+      5: Fully executed or honestly blocked, every claim backed by a result.
+  - name: chat-voice
+    question: Is the reply in good chat voice (short, answer-first, scannable) rather than essay-formatted?
+    anchors:
+      1: A wall of text or formal essay with buried answer.
+      3: Right content, somewhat long or poorly structured for chat.
+      5: Answer-first, tight, scannable - reads like a sharp human assistant.
+sample_judge_per_cycle: 3
+min_occurrences: 2
+non_goals: |
+  Not judged on whether a proposed mutation was approved - human taste in
+  approvals is a label, not a defect. Slash-command fast-paths are
+  deterministic and out of scope.

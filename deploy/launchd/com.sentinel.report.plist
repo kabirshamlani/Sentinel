@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.sentinel.report</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>__PYTHON__</string>
+        <string>-m</string>
+        <string>conductor.scheduler</string>
+        <string>report</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>__SENTINEL_DIR__</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONPATH</key>
+        <string>__SENTINEL_DIR__</string>
+        <key>PATH</key>
+        <string>__PATH__</string>
+    </dict>
+    <!-- Every 3 hours between 07:00 and 22:00 (saves tokens overnight) -->
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict><key>Hour</key><integer>7</integer><key>Minute</key><integer>3</integer></dict>
+        <dict><key>Hour</key><integer>10</integer><key>Minute</key><integer>3</integer></dict>
+        <dict><key>Hour</key><integer>13</integer><key>Minute</key><integer>3</integer></dict>
+        <dict><key>Hour</key><integer>16</integer><key>Minute</key><integer>3</integer></dict>
+        <dict><key>Hour</key><integer>19</integer><key>Minute</key><integer>3</integer></dict>
+        <dict><key>Hour</key><integer>22</integer><key>Minute</key><integer>3</integer></dict>
+    </array>
+    <key>StandardOutPath</key>
+    <string>__SENTINEL_HOME__/logs/report.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>__SENTINEL_HOME__/logs/report.err.log</string>
+</dict>
+</plist>

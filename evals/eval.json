@@ -1,0 +1,22 @@
+[
+  {
+    "id": "github-triage-classification",
+    "vertical": "github",
+    "input": "Issue: 'App crashes with NullPointerException on login'. Classify severity.",
+    "assertions": [
+      { "type": "contains", "value": "bug" },
+      { "type": "not_contains", "value": "feature request" },
+      { "type": "min_length", "value": 3 }
+    ]
+  },
+  {
+    "id": "inbox-voice-check",
+    "vertical": "inbox",
+    "input": "Draft a reply declining a meeting, in the user's concise voice.",
+    "assertions": [
+      { "type": "not_contains", "value": "As an AI language model" },
+      { "type": "regex", "value": "(?i)thank" },
+      { "type": "max_length", "value": 1200 }
+    ]
+  }
+]

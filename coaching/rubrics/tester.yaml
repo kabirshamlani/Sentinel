@@ -1,0 +1,16 @@
+agent: tester
+version: 1
+unit: [.claude/agents/tester.md]
+role: Test-running specialist - superseded by the deterministic tools/test_runner.py.
+definition_of_good: |
+  Either reachable with a distinct job the deterministic test runner cannot do,
+  or explicitly retired. A definition file with no caller is decoration.
+expect_episodes: false
+episode_checks: []
+wiring_checks:
+  - check: has_call_site
+    params:
+      slug: tester
+      exclude: [agent_registry.py]
+min_occurrences: 1
+non_goals: Static wiring review only until it actually runs.

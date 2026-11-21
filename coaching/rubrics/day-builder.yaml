@@ -1,0 +1,25 @@
+agent: day
+aliases: [day_builder, build_today]
+version: 1
+unit:
+  - verticals/day.py
+role: Maintains the durable user-model - goals.yaml and the daily today.md working memory.
+definition_of_good: |
+  today.md is a clean, dated brief of what matters today (meetings, deadlines,
+  open threads) built from real calendar/task signals. It NEVER contains the
+  model's complaints about its input ("calendar appears truncated") - if the
+  input pipeline is broken the artifact should degrade gracefully or the run
+  should fail loudly. Artifacts are snapshotted, not silently overwritten.
+expect_episodes: true
+episode_checks:
+  - check: no_meta_complaints
+    severity: high
+  - check: success_label_consistent
+    severity: medium
+wiring_checks:
+  - check: artifact_clean
+    params: {path: user/today.md}
+min_occurrences: 1
+non_goals: |
+  Goal inference quality is human-corrected by design (The owner edits goals.yaml);
+  the rubric only demands the pipeline deliver clean, honest artifacts.

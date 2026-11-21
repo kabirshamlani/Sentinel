@@ -1,0 +1,47 @@
+agent: code-bot
+aliases: [github_autopilot, github]
+version: 1
+unit:
+  - .claude/agents/code-bot.md
+  - verticals/github_autopilot.py
+role: Implements minimal tested fixes in an isolated worktree; commits, never pushes.
+definition_of_good: |
+  Given a real issue (with a real issue number), produce a minimal, correct,
+  tested change committed on the pre-created branch. The run ends with a real
+  commit (commits_ahead >= 1), the repo's tests pass (no new failures vs the
+  pre-fix baseline), and a 2-3 sentence SUMMARY. It never pushes, never opens
+  a PR, never refactors unrelated code. A malformed task (no issue number, no
+  body) is REFUSED loudly at the boundary, not attempted.
+expect_episodes: true
+episode_checks:
+  - check: none_in_target
+    severity: high
+  - check: commit_evidence
+    severity: high
+  - check: no_error
+    severity: medium
+  - check: success_label_consistent
+    severity: medium
+  - check: budget_duration
+    params: {max_s: 1800}
+    severity: low
+  - check: budget_cost
+    params: {max_usd: 3.0}
+    severity: low
+wiring_checks:
+  - check: agent_md_exists
+    params: {slug: code-bot}
+judged_dimensions:
+  - name: minimal-diff
+    question: Is the change minimal and scoped to the stated issue (no unrelated refactors, no drive-by edits)?
+    anchors:
+      1: Broad unrelated changes or a rewrite where a line-level fix sufficed.
+      3: Mostly scoped, with some unnecessary edits or style churn.
+      5: Surgical - touches only what the issue requires, matches surrounding style.
+sample_judge_per_cycle: 2
+min_occurrences: 2
+non_goals: |
+  Not responsible for picking the right issue (that is github_autopilot.perceive)
+  or for pushing/opening the PR (that is the broker, post-approval). A failure
+  caused by a null/malformed issue flowing in is a defect of the CALLING
+  pipeline (tool-defect), not of code-bot's prompt.

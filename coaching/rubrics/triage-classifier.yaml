@@ -1,0 +1,20 @@
+agent: triage
+version: 1
+unit:
+  - verticals/triage.py
+  - prompts/triage/classify.md
+role: 3-bucket email classifier (reply-worthy / notify / ignore) gating the inbox pipeline.
+definition_of_good: |
+  Every unread item gets a defensible bucket with a one-line reason, and every
+  decision is RECORDED (message-id, label, reason) so precision/recall can be
+  measured against the owner's approve/reject behavior. An unlogged classifier is
+  unobservable and cannot be coached - decision logging is part of the
+  definition of good, not an optional extra.
+expect_episodes: true
+episode_checks:
+  - check: success_label_consistent
+    severity: medium
+min_occurrences: 2
+non_goals: |
+  Perfect classification is not expected; measurable classification is.
+  Cheap-tier model by design - escalating cost to buy accuracy needs evidence.

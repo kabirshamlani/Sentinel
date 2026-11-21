@@ -1,0 +1,14 @@
+.env
+*.pyc
+__pycache__/
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+# never commit secrets or local runtime state
+google_creds/
+token.json
+*.token
+.sentinel/
+.sentinel/
+*.png

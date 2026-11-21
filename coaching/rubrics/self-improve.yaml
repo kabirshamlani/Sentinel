@@ -1,0 +1,24 @@
+agent: self_improve
+aliases: [self-improve, learning_loop]
+version: 1
+unit:
+  - learning/self_improve.py
+  - learning/agent_factory.py
+  - learning/skillbook.py
+  - learning/error_journal.py
+role: The daily failure-cluster improver - turns recurring failures into guardrail rules / specialist proposals.
+definition_of_good: |
+  Clusters are built from REAL failure text (the fields the error journal
+  actually writes), rules added to the skillbook are specific and deduplicated
+  (no empty pattern names, no truncated boilerplate), and every rule's
+  effectiveness is eventually measured (a rule that never changes an outcome
+  gets retired). The designer/judge prompts and outputs are recorded so the
+  meta-loop itself is auditable.
+expect_episodes: false
+episode_checks: []
+wiring_checks:
+  - check: journal_field_mismatch
+min_occurrences: 1
+non_goals: |
+  Not expected to fix failures itself - only to convert demonstrated failure
+  clusters into gated, auditable improvements.

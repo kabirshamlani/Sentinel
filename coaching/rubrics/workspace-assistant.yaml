@@ -1,0 +1,16 @@
+agent: workspace-assistant
+version: 1
+unit: [.claude/agents/workspace-assistant.md, brain/claude_runner.py]
+role: Workspace helper - exists only as a slug-map entry, no call site.
+definition_of_good: |
+  Either reachable or explicitly retired. Its only mention is the alias table
+  in claude_runner - capability described, never exercised.
+expect_episodes: false
+episode_checks: []
+wiring_checks:
+  - check: has_call_site
+    params:
+      slug: workspace-assistant
+      exclude: [claude_runner.py, agent_registry.py]
+min_occurrences: 1
+non_goals: Static wiring review only until it actually runs.

@@ -1,0 +1,20 @@
+agent: proactive
+aliases: [proactive_gate]
+version: 1
+unit:
+  - verticals/proactive.py
+role: The INTERRUPT/DIGEST/DROP gate deciding what is worth pinging the owner about.
+definition_of_good: |
+  Every candidate gets a recorded verdict (INTERRUPT / DIGEST / DROP) with a
+  reason - including the DROPs, because what the gate chose NOT to send is
+  exactly what a coach must be able to audit. Interrupts are rare and genuinely
+  urgent; repetition of a previously-sent item is never re-sent (skip-if-
+  nothing, never-nag-twice).
+expect_episodes: true
+episode_checks:
+  - check: success_label_consistent
+    severity: medium
+min_occurrences: 2
+non_goals: |
+  Taste in what is "interrupt-worthy" is calibrated from the owner's reactions
+  over time; the rubric demands observability and non-repetition first.

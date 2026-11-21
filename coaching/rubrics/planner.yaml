@@ -1,0 +1,17 @@
+agent: planner
+version: 1
+unit: [.claude/agents/planner.md, conductor/orchestrator.py]
+role: Task-decomposition specialist - registered in the orchestrator but with no routing pattern.
+definition_of_good: |
+  Either reachable (a routing pattern exists and episodes flow) or explicitly
+  retired. Registered-but-unreachable is the worst state - the system describes
+  a capability it cannot exercise.
+expect_episodes: false
+episode_checks: []
+wiring_checks:
+  - check: has_call_site
+    params:
+      slug: planner
+      exclude: [orchestrator.py, agent_registry.py]
+min_occurrences: 1
+non_goals: Static wiring review only until it actually runs.

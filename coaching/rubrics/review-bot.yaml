@@ -1,0 +1,33 @@
+agent: review-bot
+version: 1
+unit:
+  - .claude/agents/review-bot.md
+  - verticals/github_autopilot.py
+role: Read-only fresh-context code review of every fix diff before the PR is proposed.
+definition_of_good: |
+  Reads the actual diff and reports severity-ranked findings with file:line and
+  a concrete failure scenario each, or an explicit LGTM. Violations-only, no
+  praise, no hedging. An empty output is a FAILED review, never a clean one -
+  silence must not be interpretable as approval.
+expect_episodes: true
+episode_checks:
+  - check: review_not_empty
+    severity: high
+  - check: success_label_consistent
+    severity: medium
+wiring_checks:
+  - check: agent_md_exists
+    params: {slug: review-bot}
+judged_dimensions:
+  - name: findings-grounded
+    question: Are the review findings verified against the actual code (file:line, concrete failure scenario) rather than speculative style notes?
+    anchors:
+      1: Generic advice or speculation with no file:line grounding.
+      3: Mix of grounded findings and unverifiable "consider" notes.
+      5: Every finding cites file:line with a concrete failure scenario.
+sample_judge_per_cycle: 2
+min_occurrences: 2
+non_goals: |
+  Advisory by design - it does not block merges (deterministic gates and the
+  human do). Its findings not being persisted as structured data is a defect
+  of the calling pipeline, not of this agent.

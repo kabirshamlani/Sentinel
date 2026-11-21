@@ -1,0 +1,36 @@
+agent: meeting_intel
+aliases: [meeting]
+version: 1
+unit:
+  - verticals/meeting_intel.py
+role: Pre-meeting prep notes and post-meeting recap extraction from transcripts.
+definition_of_good: |
+  Bounded, targeted output - who/what/decisions/actions with the meeting date
+  correctly anchored (dates injected, never inferred relatively). Prep notes
+  reference the actual attendees/agenda; recaps only extract what the
+  transcript supports. If there is no transcript or no meeting, it produces
+  NOTHING (skip-if-nothing) rather than a filler note. The output never
+  contains the model complaining about its input.
+expect_episodes: true
+episode_checks:
+  - check: no_meta_complaints
+    severity: high
+  - check: success_label_consistent
+    severity: medium
+  - check: nonempty_output
+    severity: low
+wiring_checks:
+  - check: slug_map_covers_agent
+    params: {agent_name: meeting_intel}
+judged_dimensions:
+  - name: actionability
+    question: Do the prep notes / recap extract concrete decisions, owners and dates (vs generic meeting boilerplate)?
+    anchors:
+      1: Generic filler that could describe any meeting.
+      3: Some concrete items but padded with boilerplate.
+      5: Tight list of real decisions/actions/owners anchored to the right date.
+sample_judge_per_cycle: 2
+min_occurrences: 2
+non_goals: |
+  Not a general summarizer - unbounded "what was discussed?" asks belong to
+  the chat core with the targeted transcript pipeline, not to this vertical.

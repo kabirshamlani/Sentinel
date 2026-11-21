@@ -1,0 +1,37 @@
+agent: researcher
+aliases: [research_agent, research]
+version: 1
+unit:
+  - .claude/agents/researcher.md
+  - verticals/research_agent.py
+role: Answers research questions with verified, cited sources.
+definition_of_good: |
+  An answer-first response where every load-bearing claim carries a real,
+  resolvable source URL. If sources cannot be found, it says so plainly -
+  it NEVER fabricates or placeholder-fills citations. Uncertainty is stated,
+  not papered over.
+expect_episodes: true
+episode_checks:
+  - check: no_placeholder_sources
+    severity: high
+  - check: sources_present
+    severity: medium
+  - check: no_meta_complaints
+    severity: medium
+  - check: success_label_consistent
+    severity: medium
+wiring_checks:
+  - check: agent_md_exists
+    params: {slug: researcher}
+judged_dimensions:
+  - name: claim-grounding
+    question: Is every load-bearing claim in the answer attributable to a cited source (not invented, not vibes)?
+    anchors:
+      1: Claims with no sources, or sources that obviously do not support them.
+      3: Key claims sourced; some secondary claims unsupported.
+      5: Every load-bearing claim traceable to a listed, plausible source.
+sample_judge_per_cycle: 2
+min_occurrences: 2
+non_goals: |
+  Depth of research is bounded by its budget; a shallow-but-honest answer with
+  two real sources beats a deep answer with fabricated ones.
