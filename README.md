@@ -1,13 +1,36 @@
 # Sentinel
 
-[![Sentinel in 21 seconds](assets/sentinel.gif)](assets/sentinel.mp4)
+[![Watch: Sentinel explained in 100 seconds](assets/sentinel.gif)](assets/sentinel.mp4)
 
-*Click the preview for the full video with sound.*
+**[▶ Watch the full video with sound (1:41)](assets/sentinel.mp4)** — the preview above is silent.
 
 A personal autonomous agent army. It perceives your work (GitHub issues/Kanban,
 Gmail, Google Chat, Calendar, meeting transcripts), reasons with Claude Code,
 proposes actions, and — with your approval — acts. You stay the observer/approver;
 routine work runs on its own, and the system learns from every correction.
+
+## What it does, in plain words
+
+Sentinel is an agent army: 13 specialist agents that live on your computer and do your busywork.
+
+**It watches five things:** your code, your email, your chats, your calendar and your meetings.
+
+**It picks up tasks on its own and finishes them:**
+- Fixes bugs from your GitHub issues, and tests the fix before proposing it.
+- Sorts your inbox and drafts replies in your voice.
+- Prepares you for meetings and pulls out the action items afterwards.
+- Carries out requests people send you by email or chat.
+- Sends a morning news brief, and a report every three hours on what is done, waiting or failed.
+
+**You talk to it like a person** on Telegram, WhatsApp or Google Chat. It remembers the conversation and knows your people by name.
+
+**It always asks first.** Reading is free. Changing anything needs your tap. Only action types with a proven track record earn the right to run on their own.
+
+**It cannot go rogue.** A guard blocks it from pushing code, sending messages or reading secrets by itself. Passwords stay in the keychain. Text inside emails and chats is treated as untrusted. New tools and skills are vetted before install.
+
+**It gets smarter.** A mistake repeated three times becomes a rule. A correction from you triggers a root-cause analysis. A built-in coach grades each agent's work and files the fixes.
+
+**It is careful with money.** Each task goes to the cheapest model that can do it, and heavy work waits until your Mac is idle.
 
 ## How it works
 
