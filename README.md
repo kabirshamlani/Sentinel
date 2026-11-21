@@ -1,8 +1,6 @@
 # Sentinel
 
-[![Watch: Sentinel explained in 100 seconds](assets/sentinel.gif)](assets/sentinel.mp4)
-
-**[▶ Watch the full video with sound (1:41)](assets/sentinel.mp4)** — the preview above is silent.
+https://github.com/user-attachments/assets/f53feec6-c594-40fa-8b29-3b815ed3acae
 
 A personal autonomous agent army. It perceives your work (GitHub issues/Kanban,
 Gmail, Google Chat, Calendar, meeting transcripts), reasons with Claude Code,
