@@ -78,3 +78,7 @@ More detail: [`docs/CHAT.md`](docs/CHAT.md), [`docs/TOOLS.md`](docs/TOOLS.md), [
 - A **deny-guard hook** blocks `git push`, `gh pr create`, `aws … delete`, force-push,
   secret reads, and destructive shell — even if a prompt tries.
 - **git is the rollback substrate**; self-modification is always critical + PR'd, never auto-applied.
+
+## License
+
+[MIT](LICENSE)
